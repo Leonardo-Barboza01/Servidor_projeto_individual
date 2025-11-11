@@ -9,8 +9,8 @@ app.use(express.json())
 app.use(cors())
 app.use(router)
 
-app.use((err: Error, req: Request, res:Response next: NextFunction) => {
-    if(err instanceof Erros){
+app.use((err: Error, req: Request, res:Response, next: NextFunction) => {
+    if(err instanceof Error){
         return res.status(400).json({
             error: err.message
         })
@@ -20,4 +20,4 @@ app.use((err: Error, req: Request, res:Response next: NextFunction) => {
     message: 'Erro interno no server'
     })
 })
-app.listen(3333, () => console.log('está-on'))
+app.listen(3333, () => console.log('Servidor-On-line na porta 3333'))
