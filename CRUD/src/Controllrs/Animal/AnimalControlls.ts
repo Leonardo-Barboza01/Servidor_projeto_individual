@@ -9,4 +9,3 @@ class AnimalControllers{
 }
 export {AnimalControllers}
 
-// finalzar o controllers animal
