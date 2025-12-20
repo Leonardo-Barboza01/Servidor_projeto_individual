@@ -12,3 +12,51 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Molde categoria
+model categoria {
+  id String  @id @default(uuid())
+  nome String
+
+  data_criacao DataTime @default(now())
+  data_alteracao DataTime @updatedAt
+  animal Animal[]
+  
+  @@map("categoria")
+}
+
+// Molde  animal 
+
+model animal {
+  id String @id @default(uuid())
+  nome String 
+  raca String
+  peso floot
+  status Boolean
+
+  data_criacao DataTime @default(now())
+  data_alteracao DataTime @updatedAt
+
+  categoria  Categoria @relation(fields: [idCategoria], references: [id])
+  idCategoria String
+
+  @@map("animal")
+}
+
+// Model Produtos
+
+model Produtos {
+  id String @id @default(uuid())
+  nome  String 
+  preso floot
+  descricao String 
+  estoque Int @default(0)
+
+  data_criacao DataTime @default(now())
+  data_alteracao DataTime @updatedAt
+  produto Produto[]
+
+  @@map("produtos")
+  
+
+}

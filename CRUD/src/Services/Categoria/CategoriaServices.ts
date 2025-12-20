@@ -2,15 +2,13 @@ import prismaClient from "../../Prisma/PrismaClient";
 
 interface cadCategoria {
     nome: string
-    status: boolean
 }
 
 class CategoriaServices {
-    async cadastralAnimal ({nome, status}: cadCategoria){
-        await prismaClient.Categoria.create({
+    async cadastrarCategoria ({ nome }: cadCategoria){
+        await prismaClient.categoria.create({
             data: {
-                nome: nome,
-                status: status,
+                nome: nome
             }
         })
         return ({dados: 'Cadastro efetivo com sucesso'})
