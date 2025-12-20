@@ -14,7 +14,7 @@ interface cadproduto {
         nome: string,
         preco: number,
         descricao: string,
-        categoria: string,
+        idCategoria: string,
         estoque: number,
         status: boolean
     }
@@ -29,7 +29,7 @@ interface cadproduto {
                 throw new Error("Produto já cadastrado")
             }
 
-            const produto = await prismaClient.produto.create9({
+            const produto = await prismaClient.produto.create({
                 data: {
                     nome: nome,
                     preco: preco,

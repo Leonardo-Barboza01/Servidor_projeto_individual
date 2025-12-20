@@ -30,7 +30,7 @@ class ProdutoControllers {
 
     // U 
         async alterarProduto (req: Request, res: Response) {
-            const {id, nome, preco, descricao, estoque,categoria, status} = req.body
+            const {id, nome, preco, descricao, estoque,idCategoria, status} = req.body
             const enviarDados = new ProdutoServices()
             const respota = await enviarDados.alterarProduto({
                 id,
@@ -38,7 +38,7 @@ class ProdutoControllers {
                 preco,
                 descricao,
                 estoque,
-                categoria,
+                idCategoria,
                 status
             })
             return res.json(respota)
