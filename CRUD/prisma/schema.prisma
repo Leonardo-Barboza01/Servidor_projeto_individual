@@ -1,62 +1,52 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql" // Alterado de postgresql para mysql
   url      = env("DATABASE_URL")
 }
 
 // Molde categoria
-model categoria {
-  id String  @id @default(uuid())
-  nome String
+model Categoria { // Sugiro começar com Letra Maiúscula
+  id    String @id @default(uuid())
+  nome  String
 
-  data_criacao DataTime @default(now())
-  data_alteracao DataTime @updatedAt
-  animal Animal[]
+  data_criacao   DateTime @default(now()) // Corrigido de DataTime
+  data_alteracao DateTime @updatedAt      // Corrigido de DataTime
   
-  @@map("categoria")
+  animais Animal[] // Um animal pertence a uma categoria
+
+  @@map("categorias")
 }
 
-// Molde  animal 
+// Molde animal 
+model Animal {
+  id      String  @id @default(uuid())
+  nome    String 
+  raca    String
+  peso    Float   // Corrigido de floot
+  status  Boolean
 
-model animal {
-  id String @id @default(uuid())
-  nome String 
-  raca String
-  peso floot
-  status Boolean
+  data_criacao   DateTime @default(now())
+  data_alteracao DateTime @updatedAt
 
-  data_criacao DataTime @default(now())
-  data_alteracao DataTime @updatedAt
-
-  categoria  Categoria @relation(fields: [idCategoria], references: [id])
+  categoria   Categoria @relation(fields: [idCategoria], references: [id])
   idCategoria String
 
-  @@map("animal")
+  @@map("animais")
 }
 
 // Model Produtos
-
-model Produtos {
-  id String @id @default(uuid())
-  nome  String 
-  preso floot
+model Produto {
+  id        String @id @default(uuid())
+  nome      String 
+  preco     Float  // Corrigido de preso floot
   descricao String 
-  estoque Int @default(0)
+  estoque   Int    @default(0)
 
-  data_criacao DataTime @default(now())
-  data_alteracao DataTime @updatedAt
-  produto Produto[]
+  data_criacao   DateTime @default(now())
+  data_alteracao DateTime @updatedAt
 
   @@map("produtos")
-  
-
 }
