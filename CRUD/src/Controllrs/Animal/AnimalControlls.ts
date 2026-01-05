@@ -12,7 +12,6 @@ class AnimalControllers{
             nome,
             peso,
             raca,
-            local,
             status,
             idCategoria
         })
@@ -33,7 +32,6 @@ class AnimalControllers{
             id,
             nome,
             raca,
-            local,
             peso,
             status,
         })

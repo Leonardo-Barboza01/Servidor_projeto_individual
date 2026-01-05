@@ -32,10 +32,10 @@ interface cadproduto {
             const produto = await prismaClient.produto.create({
                 data: {
                     nome: nome,
-                    preco: preco,
+                    preco: Number(preco),
                     descricao: descricao,
                     status: status,
-                    estoque: estoque,
+                    estoque: Number(estoque),
                     idCategoria : idCategoria
                 }
             })
@@ -80,9 +80,9 @@ interface cadproduto {
                 },
                     data: {
                         nome: nome,
-                        preco: preco,
+                        preco: Number(preco),
                         descricao: descricao,
-                        estoque: estoque,
+                        estoque: Number(estoque),
                         status: status
                     }
             })

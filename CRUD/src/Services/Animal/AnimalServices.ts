@@ -4,7 +4,7 @@ interface cadAnimal {
     nome: string
     peso: string
     raca: string
-    local: string
+    //local: string
     status: boolean
     idCategoria: string 
 }
@@ -14,12 +14,12 @@ interface alterarAnimal {
     nome: string,
     peso: string,
     raca: string,
-    local: string,
+    //local: string,
     status: boolean
 }
 
     class AnimalServices {
-        async cadastrarAnimal ({nome, peso, raca, local, status, idCategoria} : cadAnimal){
+        async cadastrarAnimal ({nome, peso, raca, status, idCategoria} : cadAnimal){
             const animalExiste = await prismaClient.animal.findFirst({
                 where: { nome : nome }
             })
@@ -32,9 +32,9 @@ interface alterarAnimal {
                 data: {
                     nome: nome,
                     raca: raca,
-                    peso: peso,
+                    peso: Number(peso), // Convertando String para number
                     idCategoria: idCategoria,
-                    local: local,
+                    //local: local,
                     status: status
                     
                 }
@@ -49,7 +49,7 @@ interface alterarAnimal {
                     nome: true,
                     raca: true,
                     peso: true,
-                    local: true,
+                    //local: true,
                     status: true
                 }
             })
@@ -73,7 +73,7 @@ interface alterarAnimal {
             return ({ dados: "Registro Excluido com sucesso"})
         }
 
-        async alterarAnimal({id, nome, raca, peso, local, status}: alterarAnimal ) {
+        async alterarAnimal({id, nome, raca, peso, status}: alterarAnimal ) {
             await prismaClient.animal.update({
                 where: {
                     id: id
@@ -81,8 +81,8 @@ interface alterarAnimal {
                     data: {
                         nome: nome,
                         raca: raca,
-                        peso: peso,
-                        local: local,
+                        peso: Number(peso),
+                       // local: local,
                         status: status
                     }
             })
