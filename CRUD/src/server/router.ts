@@ -14,7 +14,7 @@ router.post('/CadastrarCategoria' ,  new CategoriaControllers().cadastrarCategor
 router.post('/CadastrarProduto' , new ProdutoControllers().cadastrarProduto)
 
 // Metodo GET - 
-router.get('/visualizarAnimal', new AnimalControllers().visualziarAnimal)
+router.get('/VisualizarAnimal', new AnimalControllers().visualizarAnimal)
 router.get('/VisualizarProduto', new ProdutoControllers().visualizarProduto)
 
 // Metado PUT - 

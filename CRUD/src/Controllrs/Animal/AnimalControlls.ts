@@ -18,7 +18,7 @@ class AnimalControllers{
         return res.json(resposta)
     }
 // R
-    async visualziarAnimal(req: Request, res: Response){
+    async visualizarAnimal(req: Request, res: Response){
         const enviarDados = new AnimalServices()
         const resposta = await enviarDados.visualizarAnimal()
         return res.json(resposta)
