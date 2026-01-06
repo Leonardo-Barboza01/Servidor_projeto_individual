@@ -20,6 +20,7 @@ interface cadproduto {
     }
 
     class ProdutoServices {
+        // C
         async cadastrarProduto ({nome, preco, descricao, status, estoque, idCategoria} : cadproduto) {
             const produtoExiste = await prismaClient.produto.findFirst({
                 where: { nome : nome }
@@ -41,7 +42,7 @@ interface cadproduto {
             })
             return ({dados: 'Cadastro Efetivo com sucesso'})
         }
-
+        // R
         async visualizarProduto() {
             const resposta = await prismaClient.produto.findMany({
                 select: {
@@ -55,6 +56,24 @@ interface cadproduto {
             })
                 return resposta
         }
+                // U
+            async alterarProduto({id, nome, preco, descricao, estoque ,status}: alterarProduto ) {
+            await prismaClient.produto.update({
+                where: {
+                    id: id
+                },
+                    data: {
+                        nome: nome,
+                        preco: Number(preco),
+                        descricao: descricao,
+                        estoque: Number(estoque),
+                        status: status
+                    }
+            })
+            return ({ dados: 'Registro Alterado com sucesso'})
+        }
+
+         // D
             async apagarProduto(id: string ) {
                 const idnãoexiste = await prismaClient.produto.findFirst({
                     where: {
@@ -72,22 +91,6 @@ interface cadproduto {
                 })
                 return ({ dados: "Registro Excluido com sucesso"})
             }
-
-            async alterarProduto({id, nome, preco, descricao, estoque ,status}: alterarProduto ) {
-            await prismaClient.produto.update({
-                where: {
-                    id: id
-                },
-                    data: {
-                        nome: nome,
-                        preco: Number(preco),
-                        descricao: descricao,
-                        estoque: Number(estoque),
-                        status: status
-                    }
-            })
-            return ({ dados: 'Registro Alterado com sucesso'})
-        }
    
     }
     export { ProdutoServices}
