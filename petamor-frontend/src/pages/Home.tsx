@@ -59,10 +59,19 @@ export function Home() {
   </section>
 
                 <aside className="cart-sidebar">
-                    <h2> Meu carrinho</h2>
-                    <p> o Carrinho está vazio: {carrinho.length}</p>
-                    <button className="btn-finish">Finalizar Compra</button>
+                    <h2> Meu carrinho de compras</h2>
+                    {carrinho.length === 0 ? (
+                        <p> O Carrinho está vazio </p>
+                    ) : (
+                    carrinho.map((item, index) => (
+                        <div key={index} style={{ borderBottom: '1px solid #eee', padding: '5px 0 '}}>
+                            <p>{item.nome} - <strong> R$ {item.preco}</strong></p>
+                        </div>
 
+                    ))  
+                    )}
+                    <p style={{ marginTop: '10px' }}>Total de itens: {carrinho.length}</p>
+                    <button className='btn-finish'>Finalizar Compra</button>
                 </aside>
             </main>
         </div>
