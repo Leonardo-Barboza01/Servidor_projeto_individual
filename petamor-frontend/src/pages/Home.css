@@ -39,15 +39,8 @@
     gap: 20px; /* Espaçamento entre os produtos */
 }
 
-.cart-sidebar {
-    flex: 1;
-    background: #fff;
-    padding: 20px; /*Espaço para todos os lados*/
-    border-radius: 40px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /*RGB - cor| RGBA(Alfa) - cor + transparencia(0-traparente) e (1 opaco)*/
-    height: fit-content; /*heigth - altura*/
-}
 
+/*Produtos*/
 .product-card {
     background: var(--white);
     padding: 15px;
@@ -91,9 +84,51 @@
     width: 100%;
     margin-top: 15px;
     font-weight: bold;
-    transition: background 0.2s;
+    transition: background 0.2s; /*Anima a mudança de fundo por 0,2s*/
 }
 
-.product-card:hover .btn-buy {
-    opacity: 1;
+
+.btn-buy:houver {
+    background-color: #e67e22;
+}
+
+/* Carrinho */
+
+.cart-sidebar {
+    flex: 1;
+    background: #fff;
+    padding: 20px; /*Espaço para todos os lados*/
+    border-radius: 40px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /*RGB - cor| RGBA(Alfa) - cor + transparencia(0-traparente) e (1 opaco)*/
+    position: sticky; 
+    /*Faz movimentar o objeto. + Top faz ser o ponto de partida*
+    Exemplo: Quando a pagina passar a 20px acima o carrinho ficará grudado na tela */
+    top: 20px;
+}
+
+.cart-sidebar h2 {
+    border-bottom: 2px solid var(--primeira-cor);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    color: var(--segunda-cor);
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.9rem;
+}
+
+.btn-fisish {
+    background-color: var(--segunda-cor);
+    color: white;
+    border: none;
+    width: 100%;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }
