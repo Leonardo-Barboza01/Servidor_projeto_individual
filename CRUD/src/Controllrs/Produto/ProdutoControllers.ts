@@ -8,6 +8,7 @@ class ProdutoControllers {
 
 
     async cadastrarProduto (req: Request, res: Response) {
+        
         const {nome, preco, descricao, status, estoque, idCategoria} = req.body
         const enviarDados = new ProdutoServices()
         const resposta = await enviarDados.cadastrarProduto({

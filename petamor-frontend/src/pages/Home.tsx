@@ -50,7 +50,7 @@ export function Home() {
             produtos.map((item) => (
               <div key={item.id} className="product-card">
                 {/* Imagem da logo*/}
-                <img src="https://cdn-icons-png.flaticon.com/512/620/620851.png" alt={item.nome} />
+                <img src="https://w7.pngwing.com/pngs/639/775/png-transparent-green-tennis-ball-tennis-ball-cricket-the-us-open-tennis-tennis-ball-sport-sporting-goods-grass-thumbnail.png" alt={item.nome} />
                 
             
                 <h3>{item.nome}</h3>
@@ -84,7 +84,8 @@ export function Home() {
             </>
           )}
   
-          <button className='btn-finish'>Finalizar Compra</button>
+          <button  className='btn-finish'>Finalizar Compra</button>
+          
         </aside>
       </main>
     </div>

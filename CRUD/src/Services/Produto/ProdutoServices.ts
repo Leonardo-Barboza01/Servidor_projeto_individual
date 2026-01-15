@@ -22,6 +22,11 @@ interface cadproduto {
     class ProdutoServices {
         // C
         async cadastrarProduto ({nome, preco, descricao, status, estoque, idCategoria} : cadproduto) {
+
+
+            console.log("ID da Categoria recebido:", idCategoria);
+
+            
             const produtoExiste = await prismaClient.produto.findFirst({
                 where: { nome : nome }
             })
