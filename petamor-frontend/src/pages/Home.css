@@ -1,134 +1,208 @@
 :root {
-    --primeira-cor: #f34612; /*Cor laranja*/
-    --segunda-cor:#2c3e50; /*Cor cinza*/
-    --bg-cor: #215fd1;
+    --primeira-cor: #1273f3;
+    --segunda-cor: #332727;
+    --bg-cor: #ff5100; /* Um cinza bem claro profissional para o fundo */
     --white: #ffffff;
 }
 
-.container {
-    max-width:1300px;
-    margin: 0 auto;
-    padding: 0 20px;
-    background-color: var(--bg-cor);
+/* 1. Resetando margens para preencher a tela toda */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.container-full {
+    width: 100%;
     min-height: 100vh;
+    background-color: var(--bg-cor);
+    display: flex;
+    flex-direction: column;
 }
 
 .header {
     background-color: var(--primeira-cor);
     color: white;
-    padding: 2rem;
+    padding: 3rem 1rem;
     text-align: center;
-    border-radius: 0 0 20px 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1)
+    border-radius: 0; /* Tiramos o arredondado para preencher o topo todo */
+    margin-bottom: 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 .main-content {
-    display: flex; /* Colocar os elementos em linha*/
-  /*  flex-direction: row; /* Direção dos elementos em linha*/
-   /* padding: 20px; /* Aplica o espacamentos para os 4 lados */
-    gap: 30px; /* Espaçamento entre os colunas e linhas */
+    display: flex;
+    width: 100%;
+    padding: 30px;
+    gap: 30px;
     align-items: flex-start;
-}   
-
-.grid-layout {
-    flex: 3; 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-    /* auto-fill - preencher automaticamente | minmax - tamanho mínimo e máximo */
-    gap: 20px; /* Espaçamento entre os produtos */
+    box-sizing: border-box; /* Garante que o padding não "estoure" a tela */
 }
 
+/* 2. Grid que se expande */
+.grid-layout {
+    flex: 4; /* Ocupa a maior parte da largura */
+    display: grid; 
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+    gap: 25px;
+}
 
-/*Produtos*/
+/* 3. Cards Profissionais */
 .product-card {
     background: var(--white);
-    padding: 15px;
-    border-radius: 8px;
-    transition: tranform 0.3s ease, box-shodow 0.3s ease;
-    text-align:center;
-    border: 1px solid #eee;
+    padding: 20px;
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    border: 1px solid #e1e4e8;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .product-card:hover {
-    transform: translate(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
 }
 
 .product-card img {
     width: 100%; 
-    height: 180 px;
-    object-fit: contain; /* mantem proporção com base no conteiner*/
+    height: 200px;
+    object-fit: contain;
     margin-bottom: 15px;
 }
 
-.product-card h3 {
-    font-size: 1.1rem;
-    color: var(--segunda-cor);
+.product-price {
+    color: var(--primeira-cor);
+    font-weight: 800;
+    font-size: 1.5rem;
     margin: 10px 0;
 }
 
-.prduct-card p {
-    color: var(--primeira-cor);
-    font-weight: bold;
-    font-size: 1.2rem;
-}
-
-.btn-buy {
-    background-color: var(--primeira-cor);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 15px;
-    font-weight: bold;
-    transition: background 0.2s; /*Anima a mudança de fundo por 0,2s*/
-}
-
-
-.btn-buy:houver {
-    background-color: #e67e22;
-}
-
-/* Carrinho */
-
+/* 5. Carrinho Lateral Sticky */
 .cart-sidebar {
     flex: 1;
+    min-width: 350px;
     background: #fff;
-    padding: 20px; /*Espaço para todos os lados*/
-    border-radius: 40px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /*RGB - cor| RGBA(Alfa) - cor + transparencia(0-traparente) e (1 opaco)*/
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
     position: sticky; 
-    /*Faz movimentar o objeto. + Top faz ser o ponto de partida*
-    Exemplo: Quando a pagina passar a 20px acima o carrinho ficará grudado na tela */
-    top: 20px;
-}
-
-.cart-sidebar h2 {
-    border-bottom: 2px solid var(--primeira-cor);
-    padding-bottom: 10px;
-    margin-bottom: 15px;
-    color: var(--segunda-cor);
+    top: 30px;
+    max-height: 80vh;
+    overflow-y: auto; /* Se o carrinho for grande, ele cria barra interna */
 }
 
 .cart-item {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
-    border-bottom: 1px solid #eee;
-    font-size: 0.9rem;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f0f0f0;
 }
 
-.btn-fisish {
+.btn-remove-item {
+    background: none;
+    border: none;
+    color: #ff4d4d;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.btn-finish {
     background-color: var(--segunda-cor);
     color: white;
     border: none;
     width: 100%;
-    padding: 15px;
-    border-radius: 10px;
-    margin-top: 20px;
+    padding: 18px;
+    border-radius: 12px;
+    margin-top: 25px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: filter 0.2s;
+}
+
+.btn-finish:hover:not(:disabled) {
+    filter: brightness(1.2);
+}
+
+.btn-finish:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/*Modal*/
+/* Fundo escuro atrás do modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Caixa do modal */
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    animation: popIn 0.3s ease-out;
+}
+
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-icon {
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+
+.modal-summary {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    text-align: left;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.summary-total {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+.btn-close-modal {
+    background-color: var(--primeira-cor);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-close-modal:hover {
+    background-color: var(--segunda-cor);
 }
