@@ -1,208 +1,307 @@
 :root {
-    --primeira-cor: #1273f3;
-    --segunda-cor: #332727;
-    --bg-cor: #ff5100; /* Um cinza bem claro profissional para o fundo */
+    --primeira-cor: #1273f3; /* Azul */
+    --segunda-cor: #332727; /* Marrom escuro / Cinza */
+    --laranja-mimus: #ff5100; /* Laranja da sua logo */
+    --verde-mimus: #008a8a; /* Verde da barra de topo */
+    --bg-cor: #f4f4f4; /* Fundo leve para destacar os cards */
     --white: #ffffff;
 }
 
-/* 1. Resetando margens para preencher a tela toda */
+/* 1. RESET E ESTRUTURA BASE */
 body, html {
     margin: 0;
     padding: 0;
     width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container-full {
     width: 100%;
     min-height: 100vh;
     background-color: var(--bg-cor);
-    display: flex;
-    flex-direction: column;
 }
 
-.header {
-    background-color: var(--primeira-cor);
+/* 2. TOP BAR E HEADER (ESTILO MIMUS) */
+.top-bar {
+    background-color: var(--verde-mimus);
     color: white;
-    padding: 3rem 1rem;
-    text-align: center;
-    border-radius: 0; /* Tiramos o arredondado para preencher o topo todo */
-    margin-bottom: 0;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-}
-
-.main-content {
     display: flex;
-    width: 100%;
-    padding: 30px;
-    gap: 30px;
-    align-items: flex-start;
-    box-sizing: border-box; /* Garante que o padding não "estoure" a tela */
-}
-
-/* 2. Grid que se expande */
-.grid-layout {
-    flex: 4; /* Ocupa a maior parte da largura */
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 25px;
-}
-
-/* 3. Cards Profissionais */
-.product-card {
-    background: var(--white);
-    padding: 20px;
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center;
-    border: 1px solid #e1e4e8;
-    display: flex;
-    flex-direction: column;
     justify-content: space-between;
+    padding: 10px 10%;
+    font-size: 12px;
+    font-weight: bold;
 }
 
-.product-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+.top-bar-links {
+    display: flex;
+    gap: 20px;
 }
 
-.product-card img {
-    width: 100%; 
-    height: 200px;
-    object-fit: contain;
-    margin-bottom: 15px;
+.main-header {
+    background-color: var(--white);
+    border-bottom: 1px solid #ddd;
 }
 
-.product-price {
-    color: var(--primeira-cor);
-    font-weight: 800;
-    font-size: 1.5rem;
-    margin: 10px 0;
-}
-
-/* 5. Carrinho Lateral Sticky */
-.cart-sidebar {
-    flex: 1;
-    min-width: 350px;
-    background: #fff;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-    position: sticky; 
-    top: 30px;
-    max-height: 80vh;
-    overflow-y: auto; /* Se o carrinho for grande, ele cria barra interna */
-}
-
-.cart-item {
+.header-top {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 0;
-    border-bottom: 1px solid #f0f0f0;
+    padding: 20px 10%;
 }
 
-.btn-remove-item {
-    background: none;
+.logo_principal {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo_principal img {
+    height: 60px;
+}
+
+.logo-text h1 {
+    margin: 0;
+    color: var(--laranja-mimus);
+    font-size: 28px;
+    text-transform: uppercase;
+}
+
+.logo-text p {
+    margin: 0;
+    font-size: 13px;
+    color: #666;
+}
+
+/* BARRA DE PESQUISA */
+.search-box {
+    display: flex;
+    flex: 0 1 450px;
+    background: #f0f0f0;
+    border-radius: 25px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+}
+
+.search-box input {
     border: none;
-    color: #ff4d4d;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 1.1rem;
+    background: transparent;
+    padding: 12px 20px;
+    width: 100%;
+    outline: none;
 }
 
-.btn-finish {
-    background-color: var(--segunda-cor);
+.search-box button {
+    border: none;
+    background: var(--laranja-mimus);
+    color: white;
+    padding: 0 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.header-contact {
+    background: var(--laranja-mimus);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* MENU DE CATEGORIAS */
+.nav-categories {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 10%;
+    background: white;
+    border-top: 1px solid #f0f0f0;
+}
+
+.cat-list {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+    padding: 0;
+    margin: 0;
+    font-size: 13px;
+    font-weight: bold;
+    color: #333;
+}
+
+.nav-social {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: #555;
+}
+
+.cart-trigger {
+    position: relative;
+    cursor: pointer;
+    color: var(--laranja-mimus);
+    display: flex;
+    align-items: center;
+}
+
+.cart-count {
+    position: absolute;
+    top: -10px;
+    right: -12px;
+    background: var(--laranja-mimus);
+    color: white;
+    font-size: 11px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+/* 3. CONTEÚDO E GRID */
+.promo-banner {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
+    height: 350px;
+    margin-bottom: 20px;
+}
+
+.banner-content h2 {
+    font-size: 45px;
+    color: var(--segunda-cor);
+    max-width: 400px;
+}
+
+.banner-content button {
+    background: var(--laranja-mimus);
     color: white;
     border: none;
-    width: 100%;
-    padding: 18px;
-    border-radius: 12px;
-    margin-top: 25px;
+    padding: 15px 35px;
+    border-radius: 5px;
     font-weight: bold;
-    font-size: 1rem;
     cursor: pointer;
-    transition: filter 0.2s;
 }
 
-.btn-finish:hover:not(:disabled) {
-    filter: brightness(1.2);
+.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    gap: 60px;
+    padding: 20px;
 }
 
-.btn-finish:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
+.product-card {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 20px;
+    transition: 0.3s;
+    text-align: center;
+    border: 5px solid #bdbdbd;
 }
 
-/*Modal*/
-/* Fundo escuro atrás do modal */
-.modal-overlay {
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+}
+
+.product-price {
+    color: var(--laranja-mimus);
+    font-weight: 800;
+    font-size: 1.8rem;
+    padding: 5px;
+}
+
+/* 4. CARRINHO LATERAL (DRAWER) */
+.overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 999;
+}
+
+.cart-drawer {
+    position: fixed;
+    top: 0;
+    right: -400px; /* Escondido */
+    width: 380px;
+    height: 100vh;
+    background: white;
+    z-index: 1000;
+    transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+
+.cart-drawer.open {
+    right: 0; /* Visível */
+}
+
+.drawer-header {
+    padding: 25px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drawer-items {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.cart-item-drawer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #f9f9f9;
+}
+
+/* 5. MODAL DE SUCESSO */
+.modal-overlay {
+    position: fixed;
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.85);
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
 }
 
-/* Caixa do modal */
 .modal-content {
     background: white;
-    padding: 40px;
-    border-radius: 20px;
-    max-width: 500px;
-    width: 90%;
+    padding: 180px;
+    width: 550px;
+    border-radius: 50px;
     text-align: center;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
-    animation: popIn 0.3s ease-out;
+    max-width: 550px;
+    animation: popIn 0.3s ease;
 }
 
-@keyframes popIn {
-    from { transform: scale(0.8); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
-
-.modal-icon {
-    font-size: 50px;
-    margin-bottom: 20px;
-}
-
-.modal-summary {
-    background: #f9f9f9;
-    padding: 20px;
-    border-radius: 12px;
-    margin: 20px 0;
-    text-align: left;
-}
-
-.summary-item {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 0.9rem;
-}
-
-.summary-total {
-    display: flex;
-    justify-content: space-between;
-    font-size: 1.1rem;
-    margin-top: 10px;
-}
-
-.btn-close-modal {
-    background-color: var(--primeira-cor);
+.btn-finish {
+    background-color: var(--laranja-mimus);
     color: white;
     border: none;
-    padding: 12px 30px;
-    border-radius: 25px;
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-.btn-close-modal:hover {
-    background-color: var(--segunda-cor);
+.btn-buy {
+        font-size: 1.2rem;
+    }
+
+.products-section-title {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-left: 50px;
 }

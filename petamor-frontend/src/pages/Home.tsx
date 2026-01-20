@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { api } from '../Services/api.ts';
+import { Search, ShoppingCart, Phone, User, Instagram, Facebook, Youtube } from 'lucide-react'; 
 import './home.css';
 
 interface ProdutoProps {
@@ -12,10 +13,11 @@ export function Home() {
   const [produtos, setProdutos] = useState<ProdutoProps[]>([]);
   const [carrinho, setcarrinho] = useState<ProdutoProps[]>([]);
   const [mostrarModal, setMostrarModal] = useState(false);
+  const [carrinhoAberto, setCarrinhoAberto] = useState(false);
 
-  // 1. Funções do Carrinho
   function adicionarAoCarrinho(item: ProdutoProps) {
     setcarrinho([...carrinho, item]);
+    setCarrinhoAberto(true); // Abre o carrinho automaticamente ao adicionar
   }
 
   function removerDoCarrinho(indexParaRemover: number) {
@@ -23,7 +25,6 @@ export function Home() {
     setcarrinho(novoCarrinho);
   }
 
-  // Buscar Produtos no Banco de Dados
   async function buscarProdutos() {
     try {
       const resposta = await api.get('/VisualizarProduto');
@@ -33,16 +34,15 @@ export function Home() {
     }
   }
 
-  // Aciona o Modal de sucesso
   function finalizarPedido() {
     if (carrinho.length === 0) return;
     setMostrarModal(true);
+    setCarrinhoAberto(false);
   }
 
-  // Limpa tudo e volta para a loja
   function fecharEsvaziar() {
-    setcarrinho([]); // Limpar carrinho
-    setMostrarModal(false); // Fecha modal
+    setcarrinho([]);
+    setMostrarModal(false);
   }
 
   useEffect(() => {
@@ -51,94 +51,124 @@ export function Home() {
 
   return (
     <div className='container-full'>
-      <header className="header">
-        <h1>🐾 PetAmor - PetShop</h1>
-        <p>Tudo que seu pet precisa, com carinho e cuidado 24h.</p>
+      {/* 1. BARRA DE AVISOS (TOP BAR) */}
+      <div className="top-bar">
+        <span>PEÇA HOJE - ENVIO GRÁTIS</span>
+        <div className="top-bar-links">
+          <span>FALE PELO WHATSAPP</span>
+          <span>TIRE SUAS DÚVIDAS</span>
+        </div>
+      </div>
+
+      {/* 2. HEADER PRINCIPAL */}
+      <header className="main-header">
+        <div className="header-top">
+          <div className="logo_principal">
+            <img src="/imagem/logo_petAmor.png" alt="logo PetAmor" />
+            <div className="logo-text">
+              <h1>PetAmor</h1>
+              <p>Preferido dos Pets</p>
+            </div>
+          </div>
+
+          <div className="search-box">
+            <input type="text" placeholder="Pesquisar..." />
+            <button><Search size={18} /></button>
+          </div>
+
+          <div className="header-contact">
+             <div className="contact-info">
+                <span>Ligue</span>
+                <strong>(11) 3456-7890</strong>
+             </div>
+          </div>
+        </div>
+
+        {/* 3. MENU DE CATEGORIAS */}
+        <nav className="nav-categories">
+          <ul className="cat-list">
+            <li>LOJA</li>
+            <li>CÃES</li>
+            <li>GATOS</li>
+            <li>PÁSSAROS</li>
+            <li>PEIXES</li>
+            <li>PEQUENINOS</li>
+            <li>RÉPTEIS</li>
+            <li>CONTATO</li>
+          </ul>
+          <div className="nav-social">
+            <Facebook size={18} />
+            <Youtube size={18} />
+            <Instagram size={18} />
+            <User size={18} />
+            <span className="login-text">Login</span>
+            <div className="cart-trigger" onClick={() => setCarrinhoAberto(true)}>
+               <ShoppingCart size={22} />
+               <span className="cart-count">{carrinho.length}</span>
+            </div>
+          </div>
+        </nav>
       </header>
 
+      {/* 4. CONTEÚDO PRINCIPAL (BANNER + PRODUTOS) */}
       <main className="main-content">
-        {/* GRID DE PRODUTOS */}
+        <div className="promo-banner">
+            <div className="banner-content">
+                <h2>Bem-vindos à Nossa Loja Pet</h2>
+                <button>Comprar Agora</button>
+            </div>
+            <img src="https://mimus.com.br/wp-content/uploads/2021/08/banner-home.png" alt="Banner Pets" className="banner-img" />
+        </div>
+         <div className="products-section-title">
+             <p> Confira Nossos Produtos </p>
+         </div>
         <section className="grid-layout">
-          {produtos.length === 0 ? (
-            <p className="loading-text">Buscando as melhores ofertas...</p>
-          ) : (
-            produtos.map((item) => (
-              <div key={item.id} className="product-card">
-                <img src="https://cdn-icons-png.flaticon.com/512/620/620851.png" alt={item.nome} />
-                
-                <h3>{item.nome}</h3>
-                <p className="product-price">R$ {item.preco}</p>
-                
-                <div className="card-buttons">
-                  <button className="btn-buy" onClick={() => adicionarAoCarrinho(item)}>
-                    Comprar 🛒
-                  </button>
-                </div>
-              </div>
-            ))
-          )}
+
+          {produtos.map((item) => (
+            <div key={item.id} className="product-card">
+              <img src="https://cdn-icons-png.flaticon.com/512/620/620851.png" alt={item.nome} />
+              <h3>{item.nome}</h3>
+              <p className="product-price">R$ {item.preco}</p>
+              <button className="btn-buy" onClick={() => adicionarAoCarrinho(item)}>
+                Comprar 🛒
+              </button>
+            </div>
+          ))}
         </section>
-
-        {/* CARRINHO LATERAL */}
-        <aside className="cart-sidebar">
-          <h2>Meu Carrinho</h2>
-          {carrinho.length === 0 ? (
-            <p className="empty-cart">Seu carrinho está vazio.</p>
-          ) : (
-            <>
-              <div className="cart-items-list">
-                {carrinho.map((item, index) => (
-                  <div key={index} className="cart-item">
-                    <div className="item-details">
-                      <span>{item.nome}</span>
-                      <strong>R$ {item.preco}</strong>
-                    </div>
-                    <button className="btn-remove-item" onClick={() => removerDoCarrinho(index)}>✕</button>
-                  </div>
-                ))}
-              </div>
-
-              <div className="cart-total">
-                <h3>Total: R$ {carrinho.reduce((acc, item) => acc + Number(item.preco), 0).toFixed(2)}</h3>
-              </div>
-            </>
-          )}
-          {/* Botão que aciona a função de finalizar */}
-          <button className='btn-finish' onClick={finalizarPedido} disabled={carrinho.length === 0}>
-            Finalizar pedido
-          </button>
-        </aside>
       </main>
 
-      {/* MODAL DE SUCESSO */}
+      {/* 5. OVERLAY E CARRINHO LATERAL (DRAWER) */}
+      {carrinhoAberto && <div className="overlay" onClick={() => setCarrinhoAberto(false)}></div>}
+      
+      <aside className={`cart-drawer ${carrinhoAberto ? 'open' : ''}`}>
+        <div className="drawer-header">
+          <h2>Meu Carrinho</h2>
+          <button onClick={() => setCarrinhoAberto(false)}>✕</button>
+        </div>
+        
+        <div className="drawer-items">
+          {carrinho.length === 0 ? <p>Vazio...</p> : carrinho.map((item, index) => (
+            <div key={index} className="cart-item-drawer">
+              <span>{item.nome}</span>
+              <strong>R$ {item.preco}</strong>
+              <button onClick={() => removerDoCarrinho(index)}>🗑️</button>
+            </div>
+          ))}
+        </div>
+
+        <div className="drawer-footer">
+          <h3>Total: R$ {carrinho.reduce((acc, item) => acc + Number(item.preco), 0).toFixed(2)}</h3>
+          <button className='btn-finish' onClick={finalizarPedido}>Finalizar Pedido</button>
+        </div>
+      </aside>
+
+      {/* MODAL DE SUCESSO (MANTIDO) */}
       {mostrarModal && (
         <div className="modal-overlay">
           <div className="modal-content">
             <div className="modal-icon">✅</div>
-            <h2>Pedido Realizado com sucesso!</h2>
-            <p>Obrigado por comprar na <strong>PetAmor</strong>. Veja o resumo:</p>
-
-            <div className="modal-summary-list">
-              {carrinho.map((item, index) => (
-                <div key={index} className="summary-item">
-                  {/* Span- Conteiner linear, usado igual a div, mas div ocupa espaço*/}
-                  <span>{item.nome}</span> 
-                  {/*strong- Além negrito o texto, apresenta importancia para o site - Diferente do <b> Negrito apenas </b>*/}
-                  <strong>R$ {item.preco}</strong> 
-                </div>
-              ))}
-            </div>
-
-            <hr /> {/* Separação horizontal por uma linha */}
-            
-            <div className="summary-total">
-              {/* ACC= Acumulador ou seja guarda + Adiciona outro item a conta, iniciar em 0, aloca o valor no acc e guarda o proximo valor, e vai acumulando para fazer a soma */}
-              <strong>Total: R$ {carrinho.reduce((acc, item) => acc + Number(item.preco), 0).toFixed(2)}</strong>
-            </div>
-
-            <button className="btn-close-modal" onClick={fecharEsvaziar}>
-              Continuar Comprando
-            </button>
+            <h2>Pedido Realizado!</h2>
+            <button className="btn-close-modal" onClick={fecharEsvaziar}>Continuar</button>
           </div>
         </div>
       )}
