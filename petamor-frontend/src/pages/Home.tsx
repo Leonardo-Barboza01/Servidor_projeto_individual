@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { api } from '../Services/api.ts';
 import { Search, ShoppingCart, Phone, User, Instagram, Facebook, Youtube } from 'lucide-react'; 
+import logo from '../imagem/logo_petAmor.png';
+import banner_header from '../imagem/gato-cachorro.jpg'
 import './home.css';
 
 interface ProdutoProps {
@@ -64,11 +66,7 @@ export function Home() {
       <header className="main-header">
         <div className="header-top">
           <div className="logo_principal">
-            <img src="/imagem/logo_petAmor.png" alt="logo PetAmor" />
-            <div className="logo-text">
-              <h1>PetAmor</h1>
-              <p>Preferido dos Pets</p>
-            </div>
+            <img src={logo} alt="logo PetAmor" />
           </div>
 
           <div className="search-box">
@@ -114,16 +112,21 @@ export function Home() {
       <main className="main-content">
         <div className="promo-banner">
             <div className="banner-content">
+              <div className="banner-box">
                 <h2>Bem-vindos à Nossa Loja Pet</h2>
-                <button>Comprar Agora</button>
+              </div>
             </div>
-            <img src="https://mimus.com.br/wp-content/uploads/2021/08/banner-home.png" alt="Banner Pets" className="banner-img" />
-        </div>
-         <div className="products-section-title">
+              <div className="banner-header">
+                <img src={banner_header} alt="Banner-Pets" />
+              </div> 
+            </div>
+        
+        <div className="products-section-title">
              <p> Confira Nossos Produtos </p>
-         </div>
-        <section className="grid-layout">
+        </div>
 
+        {/* SECTION COM CARROSSEL HORIZONTAL */}
+        <section className="grid-layout">
           {produtos.map((item) => (
             <div key={item.id} className="product-card">
               <img src="https://cdn-icons-png.flaticon.com/512/620/620851.png" alt={item.nome} />
@@ -162,7 +165,7 @@ export function Home() {
         </div>
       </aside>
 
-      {/* MODAL DE SUCESSO (MANTIDO) */}
+      {/* MODAL DE SUCESSO */}
       {mostrarModal && (
         <div className="modal-overlay">
           <div className="modal-content">
