@@ -46,6 +46,7 @@ model Produto {
   descricao String
   estoque   Int     @default(0)
   status    Boolean @default(true)
+  
 
   data_criacao   DateTime @default(now())
   data_alteracao DateTime @updatedAt

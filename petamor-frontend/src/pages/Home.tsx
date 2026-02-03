@@ -9,6 +9,7 @@ interface ProdutoProps {
   id: string;
   nome: string;
   preco: string;
+  imagem: string;
 }
 
 export function Home() {
@@ -129,7 +130,7 @@ export function Home() {
         <section className="grid-layout">
           {produtos.map((item) => (
             <div key={item.id} className="product-card">
-              <img src="https://cdn-icons-png.flaticon.com/512/620/620851.png" alt={item.nome} />
+             <img src={item.imagem}  alt={item.nome} />
               <h3>{item.nome}</h3>
               <p className="product-price">R$ {item.preco}</p>
               <button className="btn-buy" onClick={() => adicionarAoCarrinho(item)}>
