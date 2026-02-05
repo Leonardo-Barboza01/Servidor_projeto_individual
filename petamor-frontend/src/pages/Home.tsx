@@ -1,8 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react'; // Adicionei useRef para as setas funcionarem
 import { api } from '../Services/api.ts';
-import { Search, ShoppingCart, Phone, User, Instagram, Facebook, Youtube } from 'lucide-react'; 
+import { Search, ShoppingCart, Phone, User, Instagram, Facebook, Youtube, ChevronLeft, ChevronRight } from 'lucide-react'; 
 import logo from '../imagem/logo_petAmor.png';
-import banner_header from '../imagem/gato-cachorro.jpg'
+import banner_header from '../imagem/gato-cachorro.jpg';
+import imgRacao from '../imagem/Coleira.jpg';
+import imgBola from '../imagem/bola_tenis.png';
+import pacoteRacaoDog from '../imagem/pacote_racao_dog.jpg';
+import imgColeira from '../imagem/pote_gato.jpg';
+import pacoteRacaoCat from '../imagem/racao_gato.jpg';
 import './home.css';
 
 interface ProdutoProps {
@@ -18,9 +23,12 @@ export function Home() {
   const [mostrarModal, setMostrarModal] = useState(false);
   const [carrinhoAberto, setCarrinhoAberto] = useState(false);
 
+  // Referência para o carrossel rolar
+  const carrosselRef = useRef<HTMLDivElement>(null);
+
   function adicionarAoCarrinho(item: ProdutoProps) {
     setcarrinho([...carrinho, item]);
-    setCarrinhoAberto(true); // Abre o carrinho automaticamente ao adicionar
+    setCarrinhoAberto(true);
   }
 
   function removerDoCarrinho(indexParaRemover: number) {
@@ -48,13 +56,29 @@ export function Home() {
     setMostrarModal(false);
   }
 
+  // Função para mover o carrossel nas setas
+  const scroll = (scrollOffset: number) => {
+    if (carrosselRef.current) {
+      carrosselRef.current.scrollLeft += scrollOffset;
+    }
+  };
+
   useEffect(() => {
     buscarProdutos();
   }, []);
 
+  // Mapeamento dos produtos (A LÓGICA QUE FALTAVA)
+  const fotosProdutos: Record<string, string> = {
+    'Ração para cães': pacoteRacaoDog,
+    'Ração para gatos': pacoteRacaoCat,
+    'Brinquedo bola de tênis': imgBola,
+    'Coleira para pets': imgColeira,
+    'Pote de comida para gatos': imgRacao,
+  };
+
   return (
     <div className='container-full'>
-      {/* 1. BARRA DE AVISOS (TOP BAR) */}
+      {/* 1. BARRA DE AVISOS */}
       <div className="top-bar">
         <span>PEÇA HOJE - ENVIO GRÁTIS</span>
         <div className="top-bar-links">
@@ -63,7 +87,7 @@ export function Home() {
         </div>
       </div>
 
-      {/* 2. HEADER PRINCIPAL */}
+      {/* 2. HEADER */}
       <header className="main-header">
         <div className="header-top">
           <div className="logo_principal">
@@ -83,7 +107,6 @@ export function Home() {
           </div>
         </div>
 
-        {/* 3. MENU DE CATEGORIAS */}
         <nav className="nav-categories">
           <ul className="cat-list">
             <li>LOJA</li>
@@ -99,6 +122,7 @@ export function Home() {
             <Facebook size={18} />
             <Youtube size={18} />
             <Instagram size={18} />
+            <Phone size={18} />
             <User size={18} />
             <span className="login-text">Login</span>
             <div className="cart-trigger" onClick={() => setCarrinhoAberto(true)}>
@@ -109,7 +133,7 @@ export function Home() {
         </nav>
       </header>
 
-      {/* 4. CONTEÚDO PRINCIPAL (BANNER + PRODUTOS) */}
+      {/* 4. CONTEÚDO PRINCIPAL */}
       <main className="main-content">
         <div className="promo-banner">
             <div className="banner-content">
@@ -120,28 +144,47 @@ export function Home() {
               <div className="banner-header">
                 <img src={banner_header} alt="Banner-Pets" />
               </div> 
-            </div>
+        </div>
         
         <div className="products-section-title">
              <p> Confira Nossos Produtos </p>
         </div>
 
-        {/* SECTION COM CARROSSEL HORIZONTAL */}
-        <section className="grid-layout">
-          {produtos.map((item) => (
-            <div key={item.id} className="product-card">
-             <img src={item.imagem}  alt={item.nome} />
-              <h3>{item.nome}</h3>
-              <p className="product-price">R$ {item.preco}</p>
-              <button className="btn-buy" onClick={() => adicionarAoCarrinho(item)}>
-                Comprar 🛒
-              </button>
-            </div>
-          ))}
-        </section>
+        {/* --- CARROSSEL COM AS IMAGENS E SETAS --- */}
+        <div className="carousel-wrapper" style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+          
+          <button className="arrow-btn left" onClick={() => scroll(-300)}>
+            <ChevronLeft size={30} />
+          </button>
+
+          <section className="grid-layout" ref={carrosselRef}>
+            {produtos.map((item) => {
+              // AQUI ACONTECE A MÁGICA:
+              // Ele pega a imagem do dicionário baseado no nome que veio do banco.
+              // Se o nome não bater exatamente, ele usa a logo como reserva.
+              const imagemParaExibir = fotosProdutos[item.nome] || logo;
+
+              return (
+                <div key={item.id} className="product-card">
+                  <img src={imagemParaExibir} alt={item.nome} />
+                  <h3>{item.nome}</h3>
+                  <p className="product-price">R$ {item.preco}</p>
+                  <button className="btn-buy" onClick={() => adicionarAoCarrinho(item)}>
+                    Comprar 🛒
+                  </button>
+                </div>
+              );
+            })}
+          </section>
+
+          <button className="arrow-btn right" onClick={() => scroll(300)}>
+            <ChevronRight size={30} />
+          </button>
+
+        </div>
       </main>
 
-      {/* 5. OVERLAY E CARRINHO LATERAL (DRAWER) */}
+      {/* 5. CARRINHO LATERAL */}
       {carrinhoAberto && <div className="overlay" onClick={() => setCarrinhoAberto(false)}></div>}
       
       <aside className={`cart-drawer ${carrinhoAberto ? 'open' : ''}`}>

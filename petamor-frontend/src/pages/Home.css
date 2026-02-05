@@ -369,3 +369,27 @@ body, html {
     font-weight: bold;
     margin-left: 50px;
 }
+
+.carousel-wrapper {
+    padding: 0 40px; /* Dá espaço para as setas não ficarem em cima dos cards */
+}
+
+.arrow-btn {
+    background: #ff5100;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.arrow-btn:hover {
+    background: #008a8a;
+    transform: scale(1.1);
+}

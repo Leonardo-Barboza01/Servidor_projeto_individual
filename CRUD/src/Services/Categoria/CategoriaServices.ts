@@ -73,5 +73,5 @@ async cadastrarCategoria({ nome }: cadCategoria) {
         }
 
 }
-// Colocar depois, if para verificar se a categoria já existe.
+
    export { CategoriaServices }
