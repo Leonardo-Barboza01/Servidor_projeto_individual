@@ -321,7 +321,7 @@ body, html {
     border-bottom: 1px solid #f9f9f9;
 }
 
-/* 5. MODAL DE SUCESSO */
+/* 5. MODAL */
 .modal-overlay {
     position: fixed;
     z-index: 2000;
@@ -333,9 +333,9 @@ body, html {
 }
 
 .modal-content {
-    background: white;
+    background: rgb(255, 255, 255);
     padding: 180px;
-    width: 550px;
+    width: 650px;
     border-radius: 50px;
     text-align: center;
     max-width: 550px;

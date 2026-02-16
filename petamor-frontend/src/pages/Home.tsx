@@ -1,19 +1,28 @@
 import { useEffect, useState, useRef } from 'react'; // Adicionei useRef para as setas funcionarem
 import { api } from '../Services/api.ts';
 import { Search, ShoppingCart, Phone, User, Instagram, Facebook, Youtube, ChevronLeft, ChevronRight } from 'lucide-react'; 
+// IMPORTAÇÃO LOGO E BANNER
 import logo from '../imagem/logo_petAmor.png';
 import banner_header from '../imagem/gato-cachorro.jpg';
-import imgRacao from '../imagem/Coleira.jpg';
+
+// IMPORTAÇÃO IMAGENS DOS PRODUTOS
 import imgBola from '../imagem/bola_tenis.png';
-import pacoteRacaoDog from '../imagem/pacote_racao_dog.jpg';
-import imgColeira from '../imagem/pote_gato.jpg';
-import pacoteRacaoCat from '../imagem/racao_gato.jpg';
+import imgColeira from '../imagem/coleira_pet.png';
+import pacoteRacaoCatAdulto from '../imagem/racao_cat_adulto.png';
+import pacoteRacaoDogAdulto from '../imagem/pacote_racao_dog.png';
+import imgComedouroRacao from '../imagem/comedouro_racao_pet.png';
+import imgSachePeixe from '../imagem/sache_peixe_cat.png';
+import imgSacheDog from '../imagem/sache_frango_dog.png';
+
+
 import './home.css';
 
 interface ProdutoProps {
   id: string;
   nome: string;
   preco: string;
+  descricao: string;
+  estoque: string;
   imagem: string;
 }
 
@@ -67,13 +76,18 @@ export function Home() {
     buscarProdutos();
   }, []);
 
-  // Mapeamento dos produtos (A LÓGICA QUE FALTAVA)
+  // Mapeamento dos produtos 
   const fotosProdutos: Record<string, string> = {
-    'Ração para cães': pacoteRacaoDog,
-    'Ração para gatos': pacoteRacaoCat,
+
+// NECESSARIO CRIAR O PRODUTO NO INSOMNIA
     'Brinquedo bola de tênis': imgBola,
     'Coleira para pets': imgColeira,
-    'Pote de comida para gatos': imgRacao,
+    'Ração para gatos': pacoteRacaoCatAdulto,
+    'Ração para cães': pacoteRacaoDogAdulto,
+    'Comedouro para ração': imgComedouroRacao,
+    'sache de peixe com legumes': imgSachePeixe,
+    'sache de frango ao molho': imgSacheDog,
+    // ANOTAÇÂO: PARA ADICIONAR PRECO E NECESSARIO UTILIZAR PONTO. EX: 20.39
   };
 
   return (
@@ -159,7 +173,6 @@ export function Home() {
 
           <section className="grid-layout" ref={carrosselRef}>
             {produtos.map((item) => {
-              // AQUI ACONTECE A MÁGICA:
               // Ele pega a imagem do dicionário baseado no nome que veio do banco.
               // Se o nome não bater exatamente, ele usa a logo como reserva.
               const imagemParaExibir = fotosProdutos[item.nome] || logo;
@@ -168,6 +181,7 @@ export function Home() {
                 <div key={item.id} className="product-card">
                   <img src={imagemParaExibir} alt={item.nome} />
                   <h3>{item.nome}</h3>
+                 {/* <h3>{item.descricao}</h3> <h3>{item.estoque}</h3>*/}
                   <p className="product-price">R$ {item.preco}</p>
                   <button className="btn-buy" onClick={() => adicionarAoCarrinho(item)}>
                     Comprar 🛒
@@ -209,7 +223,7 @@ export function Home() {
         </div>
       </aside>
 
-      {/* MODAL DE SUCESSO */}
+      {/* MODAL POS-VENDA*/}
       {mostrarModal && (
         <div className="modal-overlay">
           <div className="modal-content">
