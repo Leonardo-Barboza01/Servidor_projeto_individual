@@ -1,3 +1,5 @@
+// Codigo para cadastrar Animal - estrutura para a proposta 
+
 import prismaClient from '../../Prisma/PrismaClient'
 
 interface cadAnimal {
